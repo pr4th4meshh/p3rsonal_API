@@ -8,11 +8,18 @@ type Profile struct {
 	Phone      string       `json:"phone"`
 	Summary    string       `json:"summary"`
 	Links      Links        `json:"links"`
+	Contact    Contact      `json:"contact"`
 	Experience []Experience `json:"experience"`
 	Projects   []Project    `json:"projects"`
 	Education  []Education  `json:"education"`
 	Skills     Skills       `json:"skills"`
 	Rules      []string     `json:"rules"`
+}
+
+type Contact struct {
+	Email   string `json:"email"`
+	Phone   string `json:"phone"`
+	Address string `json:"address"`
 }
 
 type Links struct {

@@ -15,6 +15,11 @@ func ProfileData() models.Profile {
 			LinkedIn: "https://www.linkedin.com/in/prathamesh-asolkar/",
 			GitHub:   "https://github.com/pr4th4meshh",
 		},
+		Contact: models.Contact{
+			Email:   "prathameshasolkar***@gmail.com",
+			Phone:   "+91 750609xxxx",
+			Address: "Bengaluru, India",
+		},
 		Experience: []models.Experience{
 			{
 				Slug:     "prana-india",
@@ -108,7 +113,7 @@ func ProfileData() models.Profile {
 			DevOps:    []string{"Docker", "AWS (EC2, S3, ECR, Amplify)"},
 			Tools:     []string{"Git", "Insomnia", "Postman", "Jira", "Slack", "Miro", "LLMs"},
 		},
-		Rules: []string{
+		Rules: []string{	
 			"Source-of-truth is in-process Go data; no database is required.",
 			"Search is case-insensitive and matches names, roles, companies, subtitles, highlights, technologies, and skills.",
 			"Unknown resource slugs return HTTP 404 with a structured error.",
