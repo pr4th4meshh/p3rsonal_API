@@ -1,20 +1,11 @@
 package profile
 
-import models "github.com/pr4th4meshh/p3rsonal_API/internal/model"
+import (
+	"strings"
 
-// api.GET("/profile", h.profile)
-// api.GET("/contact", h.contact)
-// api.GET("/skills", h.skills)
-// api.GET("/skills/:category", h.skillCategory)
-// api.GET("/stack", h.stack)
-// api.GET("/experience", h.experience)
-// api.GET("/experience/:slug", h.experienceBySlug)
-// api.GET("/projects", h.projects)
-// api.GET("/projects/:slug", h.projectBySlug)
-// api.GET("/education", h.education)
-// api.GET("/stats", h.stats)
-// api.GET("/rules", h.rules)
-// api.GET("/search", h.search)
+	models "github.com/pr4th4meshh/p3rsonal_API/internal/model"
+	"github.com/pr4th4meshh/p3rsonal_API/internal/utils"
+)
 
 type Service struct {
 	profile models.Profile
@@ -52,4 +43,66 @@ func (s *Service) GetEducation() []models.Education {
 
 func (s *Service) GetRules() []string {
 	return s.profile.Rules
+}
+
+func (s *Service) Search(query string) map[string]any {
+	query = strings.ToLower(strings.TrimSpace(query))
+
+	var experiences []models.Experience
+	var projects []models.Project
+	var skills []string
+
+	for _, item := range s.profile.Experience {
+		if utils.Matches(
+			query,
+			item.Role,
+			item.Company,
+			item.Location,
+			strings.Join(item.Stack, " "),
+			strings.Join(item.Highlights, " "),
+		) {
+			experiences = append(experiences, item)
+		}
+	}
+
+	for _, item := range s.profile.Projects {
+		if utils.Matches(
+			query,
+			item.Name,
+			item.Subtitle,
+			strings.Join(item.Technologies, " "),
+			strings.Join(item.Highlights, " "),
+		) {
+			projects = append(projects, item)
+		}
+	}
+
+	skillCategories := [][]string{
+		s.profile.Skills.Languages,
+		s.profile.Skills.Databases,
+		s.profile.Skills.Frontend,
+		s.profile.Skills.Backend,
+		s.profile.Skills.Mobile,
+		s.profile.Skills.Testing,
+		s.profile.Skills.DevOps,
+		s.profile.Skills.Tools,
+	}
+
+	for _, category := range skillCategories {
+		for _, skill := range category {
+			if strings.Contains(strings.ToLower(skill), query) {
+				skills = append(skills, skill)
+			}
+		}
+	}
+
+	return map[string]any{
+		"query": query,
+		"data": map[string]any{
+			"experience": experiences,
+			"projects":   projects,
+			"skills":     skills,
+		},
+		"count": len(experiences) + len(projects) + len(skills),
+	}
 }

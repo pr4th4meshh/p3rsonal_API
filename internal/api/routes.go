@@ -15,4 +15,5 @@ func RegisterRoutes(e *echo.Echo, h *handlers.Handler) {
 	e.GET("/education", h.Education)
 	e.GET("/stats", h.Stats)
 	e.GET("/rules", h.Rules)
+	e.GET("/search", h.Search)
 }

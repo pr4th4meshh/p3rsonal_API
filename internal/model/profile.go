@@ -66,3 +66,10 @@ type Skills struct {
 	Testing   []string `json:"testing"`
 	Tools     []string `json:"tools"`
 }
+
+type SearchResult struct {
+	Type        string `json:"type"`
+	Title       string `json:"title"`
+	Description string `json:"description,omitempty"`
+	URL         string `json:"url,omitempty"`
+}

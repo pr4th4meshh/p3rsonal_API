@@ -61,3 +61,9 @@ func (h *Handler) Rules(c *echo.Context) error {
 	data := h.profile.GetRules()
 	return c.JSON(http.StatusOK, data)
 }
+
+func (h *Handler) Search(c *echo.Context) error {
+	query := c.QueryParam("query")
+	data := h.profile.Search(query)
+	return c.JSON(http.StatusOK, data)
+}
